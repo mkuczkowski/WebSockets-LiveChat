@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO app</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+      body {
+        background-color: rgb(180, 173, 173);
+      }
+      #m {
+        width: 100%;
+      }
+      ul li:nth-child(2n+2) {
+        background-color: gray;
+      }
+      form {
+        margin-top: 5%;
+      }
+      button {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Socket.io chat</h1>
+            <p>Users online: <span id="usersVal">1</span></p>
+          </div>
+        <ul id="messages" class="list-group"></ul>
+        <form>
+          <textarea id="m" autocomplete="off" required></textarea>
+          <button type="submit" class="btn btn-primary">Primary</button>
+        </form>
+    </div>
+    
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        $('form').submit(function(){
+          socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+        socket.on('chat message', function(msg) {
+          $('#messages').append($('<li class="list-group-item">').text(msg));
+        });
+        socket.on('users info', function(info) {
+          $('#usersVal').text(info);
+        })
+      });
+    </script>
+  </body>
+</html>
