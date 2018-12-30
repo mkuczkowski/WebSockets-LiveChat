@@ -10,19 +10,22 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
+    socket.broadcast.emit('connected');
     io.emit('users info', ++currentUsers);
-    io.emit('chat message', currentUsers);
-    console.log('user connected');
     socket.on('chat message', function(msg) {
-        console.log('message: ' + msg);
         io.emit('chat message', msg);
-    })
+    });
     socket.on('disconnect', function(){
         io.emit('users info', --currentUsers);
-        console.log('user disconnected');
-        io.emit('chat message', "User disconnected");
+        io.emit('disconnected');
     });
-})
+    socket.on('user typing', function() {
+        socket.broadcast.emit('user typing');
+    });
+    socket.on('user not typing', function() {
+        socket.broadcast.emit('user not typing');
+    });
+});
 
 http.listen(3000, function() {
   console.log('Listening on port 3000...');
