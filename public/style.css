@@ -1,0 +1,26 @@
+body {
+  background: url("https://www.10wallpaper.com/wallpaper/2560x1600/1701/Close_up_photo_of_keyboard-Brand_HD_Wallpaper_2560x1600.jpg") no-repeat fixed;
+  background-size: cover;
+  
+}
+
+#m {
+  width: 100%;
+  border-radius: 6px;
+}
+
+form {
+  margin-top: 5%;
+}
+
+button {
+  width: 100%;
+}
+
+.jumbotron {
+  background: url("https://media.giphy.com/media/l41YvpiA9uMWw5AMU/giphy.gif") no-repeat center;
+  background-size: cover;
+  color: white;
+  border-bottom-left-radius: 75px;
+  border-bottom-right-radius: 75px;
+}
